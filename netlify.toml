@@ -8,7 +8,9 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
+# index.html is the CRM; force root to the marketing homepage
 [[redirects]]
   from = "/"
   to = "/homepage-top.html"
   status = 200
+  force = true
