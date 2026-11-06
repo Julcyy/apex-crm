@@ -8,9 +8,14 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
-# index.html is the CRM; force root to the marketing homepage
+# CRM lives at /crm/
 [[redirects]]
-  from = "/"
-  to = "/homepage-top.html"
-  status = 200
-  force = true
+  from = "/crm"
+  to = "/crm/"
+  status = 301
+
+# Old CRM path (root index.html used to be the dashboard)
+[[redirects]]
+  from = "/crm-dashboard"
+  to = "/crm/"
+  status = 301

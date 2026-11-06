@@ -4,13 +4,13 @@ Single-page mini CRM dashboard for an electrical & HVAC field-services company (
 
 ## Files
 
-- `index.html` — full dashboard (stats, drag-and-drop dispatch board, lead detail + AI Summary, inbox)
+- `crm/index.html` — full dashboard (stats, drag-and-drop dispatch board, lead detail + AI Summary, inbox)
 - `README.md` — this file
 
 ## How to open
 
-1. Open `index.html` in any modern browser (Chrome, Safari, Edge, Firefox).
-2. Or from this folder run: `open index.html` (macOS) / double-click the file.
+1. Open `crm/index.html` (or live `/crm/`) in any modern browser (Chrome, Safari, Edge, Firefox).
+2. Or from this folder run: `open crm/index.html` (macOS) / double-click the file.
 
 No install, no build step, no server required.
 
