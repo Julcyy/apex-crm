@@ -435,8 +435,8 @@
     .msg-compose button:hover { filter:brightness(.95); }
     .msg-compose button:disabled { opacity:.5; cursor:default; }
 
-    @font-face { font-family:"Sofia Pro"; src:url("assets/fonts/sofia-regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
-    @font-face { font-family:"Sofia Pro"; src:url("assets/fonts/sofia-bold.woff2") format("woff2"); font-weight:700; font-display:swap; }
+    @font-face { font-family:"Sofia Pro"; src:url("/assets/fonts/sofia-regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+    @font-face { font-family:"Sofia Pro"; src:url("/assets/fonts/sofia-bold.woff2") format("woff2"); font-weight:700; font-display:swap; }
     body, button { font-family:"Sofia Pro", "Nunito Sans", "Helvetica Neue", Arial, sans-serif; }
     .analytics { max-width:1400px; margin:0 auto; padding:18px 24px 0; }
     .overview-heading { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:12px; }
@@ -627,7 +627,7 @@
 <div class="st-shell"><aside class="st-side" aria-label="Modules"><div class="st-brand"><b>APEX</b> <span>General</span></div><ul class="st-nav"><li><button data-mod="dashboard"><span class="ico">▦</span><span class="lbl">Dashboard</span></button></li><li><button data-mod="crm" class="active"><span class="ico">◎</span><span class="lbl">CRM</span></button></li><li><button data-mod="calls"><span class="ico">☎</span><span class="lbl">Calls</span></button></li><li><button data-mod="schedule"><span class="ico">▤</span><span class="lbl">Schedule</span></button></li><li><button data-mod="dispatch"><span class="ico">➤</span><span class="lbl">Dispatch</span></button></li><li><button data-mod="messages"><span class="ico">✉</span><span class="lbl">Messages</span></button></li><li><button data-mod="analytics"><span class="ico">▲</span><span class="lbl">Analytics</span></button></li><li><button data-mod="accounting"><span class="ico">$</span><span class="lbl">Accounting</span></button></li><li><button data-mod="inventory"><span class="ico">▣</span><span class="lbl">Inventory</span></button></li><li><button data-mod="followup"><span class="ico">↻</span><span class="lbl">Follow Up</span></button></li><li><button data-mod="reports"><span class="ico">≡</span><span class="lbl">Reports</span></button></li><li><button data-mod="marketing"><span class="ico">✦</span><span class="lbl">Marketing</span></button></li><li><button data-mod="pricebook"><span class="ico">◈</span><span class="lbl">Pricebook</span></button></li><li><button data-mod="projects"><span class="ico">◧</span><span class="lbl">Projects</span></button></li></ul></aside><div class="st-main">
   <header>
     <div class="brand">
-      <img src="apex-logo.png" alt="Apex Air, Heating &amp; Electric" />
+      <img src="/apex-logo.png" alt="Apex Air, Heating &amp; Electric" />
       <div>
         <h1>Apex Air, Heating &amp; Electric</h1>
         <div class="subtitle">CRM · Apex General Contracting, Inc.</div>
@@ -654,13 +654,13 @@
     <div class="overview-heading"><h2 id="overview-title">Insights · CRM pipeline</h2><p>Month to date · HVAC &amp; electrical · Fresno / Central Valley</p></div>
     <div class="insights-kpis" role="group" aria-label="Pipeline metrics">
       <article class="insights-kpi"><div class="label">Won total</div><div class="value">$186k</div><div class="trend">↑ 2.0%</div></article>
-      <article class="insights-kpi"><div class="label">Close rate</div><div class="value">34%</div><div class="trend">↑ 2.0%</div></article>
+      <article class="insights-kpi"><div class="label">Close rate <span style="font-weight:500;color:#6b7280">(live)</span></div><div class="value" id="kpi-live-close">—</div><div class="trend">from Data Table</div></article>
       <article class="insights-kpi"><div class="label">Avg opportunity value</div><div class="value">$2.8k</div><div class="trend">↑ 2.0%</div></article>
       <article class="insights-kpi"><div class="label">Avg days to close</div><div class="value">6</div><div class="trend">↑ 2.0%</div></article>
       <article class="insights-kpi"><div class="label">Open pipeline total</div><div class="value">$412k</div><div class="trend">↑ 2.0%</div></article>
     </div>
     <div class="analytics-grid">
-      <article class="analytics-panel" style="grid-column:1 / -1"><h3>Won opportunities</h3><div class="chart-summary"><strong>$186k</strong><span>month to date · HVAC repair, panel upgrades, EV installs</span></div><div class="bar-chart won-chart" role="img" aria-label="Won opportunities by week: Oct 6 $28k, Oct 13 $34k, Oct 20 $41k, Oct 27 $46k, Nov 3 $37k"><div class="bar-column"><span class="bar-number">$28k</span><div class="bar-fill" style="height:48px"></div></div><div class="bar-column"><span class="bar-number">$34k</span><div class="bar-fill" style="height:58px"></div></div><div class="bar-column"><span class="bar-number">$41k</span><div class="bar-fill" style="height:70px"></div></div><div class="bar-column"><span class="bar-number">$46k</span><div class="bar-fill" style="height:79px"></div></div><div class="bar-column"><span class="bar-number">$37k</span><div class="bar-fill" style="height:63px"></div></div></div><div class="chart-labels" aria-hidden="true"><span>Oct 6</span><span>Oct 13</span><span>Oct 20</span><span>Oct 27</span><span>Nov 3</span></div><div class="chart-footnote">Closed jobs only · New Leads count: <span id="kpi-live-new">—</span></div></article>
+      <article class="analytics-panel" style="grid-column:1 / -1"><h3>Won opportunities</h3><div class="chart-summary"><strong>$186k</strong><span>month to date · HVAC repair, panel upgrades, EV installs</span></div><div class="bar-chart won-chart" role="img" aria-label="Won opportunities by week: Oct 6 $28k, Oct 13 $34k, Oct 20 $41k, Oct 27 $46k, Nov 3 $37k"><div class="bar-column"><span class="bar-number">$28k</span><div class="bar-fill" style="height:48px"></div></div><div class="bar-column"><span class="bar-number">$34k</span><div class="bar-fill" style="height:58px"></div></div><div class="bar-column"><span class="bar-number">$41k</span><div class="bar-fill" style="height:70px"></div></div><div class="bar-column"><span class="bar-number">$46k</span><div class="bar-fill" style="height:79px"></div></div><div class="bar-column"><span class="bar-number">$37k</span><div class="bar-fill" style="height:63px"></div></div></div><div class="chart-labels" aria-hidden="true"><span>Oct 6</span><span>Oct 13</span><span>Oct 20</span><span>Oct 27</span><span>Nov 3</span></div><div class="chart-footnote">Closed jobs only · Live leads: <span id="kpi-live-total">—</span> · New: <span id="kpi-live-new">—</span> · Assigned: <span id="kpi-live-assigned">—</span> · Done: <span id="kpi-live-done">—</span></div></article>
       <article class="analytics-panel"><h3>Calls · this week</h3><div class="chart-summary"><strong>275</strong><span>inbound calls</span></div><div class="bar-chart call-chart" role="img" aria-label="Mon: 38, Tue: 46, Wed: 41, Thu: 54, Fri: 49, Sat: 28, Sun: 19"><div class="bar-column"><span class="bar-number">38</span><div class="bar-fill" style="height:58.7px"></div></div><div class="bar-column"><span class="bar-number">46</span><div class="bar-fill" style="height:71.1px"></div></div><div class="bar-column"><span class="bar-number">41</span><div class="bar-fill" style="height:63.4px"></div></div><div class="bar-column"><span class="bar-number">54</span><div class="bar-fill" style="height:83.5px"></div></div><div class="bar-column"><span class="bar-number">49</span><div class="bar-fill" style="height:75.7px"></div></div><div class="bar-column"><span class="bar-number">28</span><div class="bar-fill" style="height:43.3px"></div></div><div class="bar-column"><span class="bar-number">19</span><div class="bar-fill" style="height:29.4px"></div></div></div><div class="chart-labels" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="chart-footnote">HVAC &amp; electrical · 92% answer rate</div></article>
       <article class="analytics-panel performance-panel" style="grid-column:span 2"><h3>Technician performance</h3><div class="chart-summary"><strong>115 jobs</strong><span>HVAC &amp; electrical this month</span></div><table class="tech-table"><thead><tr><th scope="col">Technician</th><th scope="col">Completed</th><th scope="col">Rating / 5</th></tr></thead><tbody><tr><td><span class="tech-avatar" aria-hidden="true">MR</span>Mike R. <small style="color:#6b7280;font-weight:500">· HVAC lead</small></td><td>32</td><td><span class="rating-star" aria-hidden="true">★</span> 4.9</td></tr><tr><td><span class="tech-avatar" aria-hidden="true">JT</span>Jose T. <small style="color:#6b7280;font-weight:500">· HVAC</small></td><td>28</td><td><span class="rating-star" aria-hidden="true">★</span> 4.8</td></tr><tr><td><span class="tech-avatar" aria-hidden="true">SK</span>Sarah K. <small style="color:#6b7280;font-weight:500">· Electrical</small></td><td>30</td><td><span class="rating-star" aria-hidden="true">★</span> 5.0</td></tr><tr><td><span class="tech-avatar" aria-hidden="true">DL</span>Devon L. <small style="color:#6b7280;font-weight:500">· HVAC + EV</small></td><td>25</td><td><span class="rating-star" aria-hidden="true">★</span> 4.9</td></tr></tbody></table></article>
     </div>
@@ -897,7 +897,7 @@
         issue,
         slot: row.preferredSlot || row.preferred_slot || row.slot || "—",
         notes: row.details || row.notes || "",
-        smsOptIn: !!row.smsOptIn,
+        smsOptIn: row.smsOptIn === true || String(row.smsOptIn).toLowerCase() === "true",
         createdAt: row.createdAt || row.created_at || row.submittedAt || "",
         raw: row,
       };
@@ -1056,7 +1056,7 @@
         ]
       }
     ];
-    let activeThreadId = DEMO_THREADS[0].id;
+    let activeThreadId = null;
     /** Session-only typed SMS bubbles keyed by thread id (cleared on full page refresh). */
     const sessionExtras = Object.create(null);
 
@@ -1119,7 +1119,8 @@
     }
 
     function allContacts() {
-      const live = leads.map((l) => ({
+      // Live n8n Data Table leads only — no demo roster merge
+      return leads.map((l) => ({
         id: "live-" + l.id,
         liveId: l.id,
         name: l.name,
@@ -1135,10 +1136,6 @@
         fromLive: true,
         lead: l,
       }));
-      // Prefer live rows; keep demo names that aren't already mirrored by last name
-      const liveLast = new Set(live.map((c) => (c.name.split(" ").pop() || "").toLowerCase()));
-      const demos = DEMO_CONTACTS.filter((d) => !liveLast.has((d.name.split(" ").pop() || "").toLowerCase()));
-      return live.concat(demos);
     }
 
     function filteredContacts() {
@@ -1152,14 +1149,9 @@
 
     function contactThread(c) {
       if (c.fromLive && c.lead) {
-        const match = findDemoMatch(c.lead);
-        if (match) return threadWithExtras(match);
         return threadWithExtras(leadThreadFrom(c.lead));
       }
-      const demo = DEMO_THREADS.find((t) => t.id === "t-" + c.id.replace("demo-", "")) ||
-        DEMO_THREADS.find((t) => (c.name || "").toLowerCase().includes(t.name.split(" ").pop().toLowerCase()));
-      if (demo) return threadWithExtras(demo);
-      // synthetic
+      // Fallback synthetic thread (should not hit when Contacts are live-only)
       const first = (c.name || "Customer").split(" ")[0];
       const synthetic = {
         id: "ct-" + c.id,
@@ -1386,13 +1378,11 @@
     }
 
     function inboxThreads(selectedLead) {
-      const threads = DEMO_THREADS.map((t) => ({ ...t }));
+      // Messages inbox mirrors live Pipeline leads (SMS UI is demo chrome; names are real)
+      const threads = leads.map((l) => leadThreadFrom(l)).filter(Boolean);
       if (selectedLead) {
-        const match = findDemoMatch(selectedLead);
-        if (match) {
-          activeThreadId = match.id;
-        } else {
-          const lt = leadThreadFrom(selectedLead);
+        const lt = leadThreadFrom(selectedLead);
+        if (lt) {
           const existing = threads.findIndex((t) => t.id === lt.id);
           if (existing >= 0) threads[existing] = lt;
           else threads.unshift(lt);
@@ -1441,10 +1431,15 @@
       const list = document.getElementById("msg-list");
       if (!list) return;
       const threads = inboxThreads(selectedLead);
+      if (!threads.length) {
+        list.innerHTML = `<div class="msg-list-head">Inbox · 0</div><div class="msg-empty" style="padding:16px">No live leads yet — submit Book Now or hit Refresh.</div>`;
+        renderThreadPane(null);
+        return;
+      }
       if (!threads.some((t) => t.id === activeThreadId)) activeThreadId = threads[0].id;
       const active = threads.find((t) => t.id === activeThreadId) || threads[0];
-      list.innerHTML = `<div class="msg-list-head">Inbox · ${threads.length}</div>` + threads.map((t) => {
-        const live = t.fromLead || (selectedLead && findDemoMatch(selectedLead) && findDemoMatch(selectedLead).id === t.id);
+      list.innerHTML = `<div class="msg-list-head">Inbox · ${threads.length} live</div>` + threads.map((t) => {
+        const live = !!t.fromLead;
         return `<button type="button" class="msg-item${t.id === activeThreadId ? " active" : ""}" data-thread="${escapeHtml(t.id)}">
           <div class="row1"><span class="from">${escapeHtml(t.name)}${live ? '<span class="tag-live">Lead</span>' : ""}</span><span class="time">${escapeHtml(t.time)}</span></div>
           <div class="preview">${escapeHtml(t.preview)}</div>
@@ -1504,6 +1499,17 @@
       document.getElementById("kpi-live-new").textContent = lastError ? "—" : String(n);
       document.getElementById("stat-progress").textContent = String(a);
       document.getElementById("stat-done").textContent = String(d);
+      const liveTotal = document.getElementById("kpi-live-total");
+      if (liveTotal) liveTotal.textContent = lastError ? "—" : String(leads.length);
+      const liveAssigned = document.getElementById("kpi-live-assigned");
+      if (liveAssigned) liveAssigned.textContent = lastError ? "—" : String(a);
+      const liveDone = document.getElementById("kpi-live-done");
+      if (liveDone) liveDone.textContent = lastError ? "—" : String(d);
+      const closeEl = document.getElementById("kpi-live-close");
+      if (closeEl) {
+        const rate = leads.length ? Math.round((d / leads.length) * 100) : 0;
+        closeEl.textContent = lastError ? "—" : (rate + "%");
+      }
     }
 
     function renderBoard() {
