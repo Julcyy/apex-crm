@@ -1,0 +1,77 @@
+Apex General Demo — Paano i-present kay Apex (Taglish guide)
+============================================================
+Folder: ~/apex-crm-demo
+Files: homepage-top.html · booking.html · index.html (CRM) · booking → live n8n webhook
+
+I. Bago mag-start (30 seconds)
+------------------------------
+1. Buksan ang folder: ~/apex-crm-demo
+2. Best kung naka-serve via browser (hindi file://) para sure na tumatama ang Finish Booking sa n8n.
+   Sa Terminal:
+     cd ~/apex-crm-demo
+     python3 -m http.server 8765
+   Tapos buksan:
+     http://127.0.0.1:8765/homepage-top.html
+   (Kung file:// lang ang binuksan mo, pwede pa ring i-demo ang UI; minsan lang na-block ang webhook ng browser.)
+3. Sabihin agad kay Apex: "Demo lang 'to — hindi live sa apexgeneralinc.com, at hindi pa connected sa GHL."
+
+II. Script ng presentation (sunod-sunod)
+----------------------------------------
+
+STEP 1 — Buksan ang "website"
+• Open homepage-top.html (o http://127.0.0.1:8765/homepage-top.html).
+• Ipakita ang black nav: Services, Financing, About, Blog, Contact, phone, pulang Book Now.
+• I-scroll ang hero: "Home comfort & power, at its apex." Sabihin na may light animation (fade/slide/glow) para feel ng real site.
+• Scroll pababa: services grid, Why Apex, service area, reviews, blog, FAQ, footer.
+• Message: "Ito 'yung customer-facing site — branded red/black, same story nila."
+
+STEP 2 — Book Now
+• Click ang pulang Book Now (o Book an Appointment).
+• Dapat pumunta sa booking.html — local scheduler-style flow (ServiceTitan-inspired), hindi sa live Apex site.
+
+STEP 3 — Lakarin ang limang steps (gamit demo data)
+1) Location — Zip: 93720 (o kahit anong Fresno-area ZIP)
+2) Service — Heating & Cooling → Repair → Repair AC
+3) Schedule — First Available (piliin ang unang slot)
+4) Contact — Name: Demo Lead · Phone: 559-555-0199 · Email: kahit demo · Address: kahit 123 Demo St, Fresno, CA
+5) Additional — Issue: "AC not cooling" · check Terms · Finish Booking
+
+Habang nagki-click, sabihin: "Customer flow in under a minute — zip, trade, slot, contact, submit."
+
+STEP 4 — Ipakita na may live backend
+• Pagkatapos ng Finish Booking, dapat may confirmation.
+• Sabihin: "Hindi lang UI 'yan — pumapasok sa live n8n webhook:
+  https://lightseagreen-hawk-553270.hostingersite.com/webhook/apex-booking
+  at naka-store sa n8n Data Table: Apex CRM Demo Leads."
+• Point: website form → automation brain (n8n) → stored lead. Wala pang GHL/CRM sync (on purpose).
+
+STEP 5 — Buksan ang CRM dashboard
+• Open index.html (http://127.0.0.1:8765/index.html).
+• Ipakita ang lead-to-dispatch story: leads / jobs / techs vibe ng internal ops.
+• Honest note: ang CRM screen ay visual demo ng operating system; ang bagong booking mula sa form ay nasa n8n Data Table muna. Next step ay i-wire ang table → CRM/Supabase para automatic magpakita ang bagong lead.
+
+STEP 6 — I-close ang pitch (n8n + future Supabase)
+• Ngayon: static HTML demos + live n8n webhook + Data Table storage.
+• Next upgrade: Supabase (o DB) as source of truth — bookings, customers, job status — tapos CRM UI reads/writes doon; optional GHL sync later.
+• One-liner: "Site para sa customer, n8n para sa glue, Supabase later para sa real database, CRM para sa dispatch."
+
+III. Quick Q&A cheats
+---------------------
+Q: Live ba 'to sa Apex domain?
+A: Hindi — local demo files + Al/Jules n8n instance.
+
+Q: Papasok ba sa GHL?
+A: Hindi pa. Sinadya: form → n8n store only.
+
+Q: Ano'ng next kung gusto nila production?
+A: Host the pages (or rebuild in their stack), keep webhook, move Data Table → Supabase, then CRM + notifications.
+
+IV. Checklist bago tumawag / mag-meet
+-------------------------------------
+[ ] ~/apex-crm-demo updated (homepage-top, booking, index, logo)
+[ ] python3 -m http.server 8765 running (optional but recommended)
+[ ] Test Finish Booking once (Demo Lead) — may row sa Apex CRM Demo Leads
+[ ] index.html ready for ops story
+[ ] Reminder: WAVV / other Alnazir workflows untouched; this is Apex-only demo path
+
+Good luck, Jules — keep it simple: Site → Book → Save → Ops vision → Database next.

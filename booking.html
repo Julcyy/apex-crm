@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>/* EARLY_EMBED */(function(){try{if(/[?&]embed=1(?:&|$)/.test(location.search)){document.documentElement.className+=' embed';}}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Online Now · Apex General</title>
+  <style>
+    :root {
+      --apex-red: #b51f35;
+      --apex-red-dark: #9a1a2d;
+      --apex-red-disabled: #e8a0a8;
+      --apex-pink: #f8e6e9;
+      --scrim: rgba(0,0,0,0.55);
+      --bg: #1a1a1a;
+      --panel: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: #d8dbe0;
+      --gray-btn: #eef0f2;
+      --gray-btn-text: #374151;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      background: var(--scrim);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+      color: var(--text);
+    }
+    .shell {
+      width: 100%;
+      max-width: 560px;
+      background: var(--panel);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 48px);
+    }
+    .topbar {
+      background: var(--apex-red);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; }
+    .topbar-brand img {
+      height: 42px; width: auto;
+      background: #fff; border-radius: 3px; padding: 2px 4px;
+    }
+    .topbar-brand .divider {
+      width: 1px; height: 36px; background: rgba(255,255,255,0.35);
+    }
+    .topbar-titles .name {
+      font-weight: 800; font-size: 0.95rem; letter-spacing: 0.06em;
+    }
+    .topbar-titles .sub { font-size: 0.78rem; font-weight: 500; opacity: 0.95; }
+    .close-x {
+      background: transparent; border: none; color: #fff;
+      font-size: 1.5rem; cursor: pointer; width: 36px; height: 36px;
+    }
+    .progress {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px 10px; background: #fff;
+      border-bottom: 1px solid #eee; flex-shrink: 0;
+    }
+    .prog-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .prog-item .circle {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid var(--apex-red); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--apex-red);
+    }
+    .prog-item.active .circle, .prog-item.done .circle {
+      background: var(--apex-red); color: #fff; border-color: var(--apex-red);
+    }
+    .prog-item .label { font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+    .prog-item.active .label { color: var(--text); }
+    .prog-line { flex: 1; height: 2px; background: #e5e7eb; margin: 0 4px 16px; }
+    .prog-line.done { background: var(--apex-red); }
+    .icon-svg { width: 16px; height: 16px; display: block; }
+    .cat-card .icon .icon-svg { width: 36px; height: 36px; }
+
+    .body {
+      padding: 24px 32px 12px; overflow-y: auto; flex: 1;
+    }
+    .body h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+    .body h2.center { text-align: center; }
+    .body .hint { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+    .body .hint.center { text-align: center; }
+    .caption {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--muted); text-transform: uppercase; margin: 16px 0 10px;
+    }
+    label.field-label {
+      display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;
+    }
+    label .req { color: var(--apex-red); }
+    input[type="text"], input[type="tel"], input[type="email"],
+    input[type="date"], select, textarea {
+      width: 100%; padding: 10px 12px; height: 40px;
+      border: 1px solid var(--border); border-radius: 4px;
+      font: inherit; font-size: 0.9rem; margin-bottom: 12px; background: #fff;
+    }
+    textarea { height: auto; min-height: 96px; resize: vertical; padding: 12px; }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--apex-red);
+      box-shadow: 0 0 0 3px rgba(181,31,53,0.15);
+    }
+    input:disabled { background: #f3f4f6; color: var(--muted); }
+    .field-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .van {
+      width: 120px; height: 90px; margin: 0 auto 16px; display: block;
+    }
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px;
+    }
+    @media (max-width: 540px) {
+      .cat-grid { grid-template-columns: repeat(3, 1fr); }
+      .field-row { grid-template-columns: 1fr; }
+      .body { padding: 20px 16px 8px; }
+    }
+    .cat-card {
+      position: relative; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 12px 4px 10px; text-align: center; cursor: pointer;
+      background: #fff; font: inherit; min-height: 96px;
+    }
+    .cat-card.selected { border-color: var(--apex-red); box-shadow: 0 0 0 1px var(--apex-red); }
+    .cat-card .check {
+      display: none; position: absolute; top: 4px; left: 4px;
+      width: 16px; height: 16px; border-radius: 50%; background: var(--apex-red);
+      color: #fff; font-size: 0.6rem; line-height: 16px; font-weight: 700;
+    }
+    .cat-card.selected .check { display: block; }
+    .cat-card .icon { display: flex; justify-content: center; margin-bottom: 6px; height: 40px; align-items: center; }
+    .cat-card .name { font-size: 0.68rem; font-weight: 700; line-height: 1.2; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .chip {
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 6px;
+      background: #fff; font: inherit; font-weight: 600; font-size: 0.88rem; cursor: pointer;
+    }
+    .chip.selected { border-color: var(--apex-red); background: var(--apex-pink); box-shadow: 0 0 0 1px var(--apex-red); }
+
+    .toggle {
+      display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid var(--apex-red);
+      border-radius: 6px; overflow: hidden; margin-bottom: 14px;
+    }
+    .toggle button {
+      border: none; background: #fff; padding: 12px; font: inherit; font-weight: 700;
+      font-size: 0.85rem; cursor: pointer; color: var(--text);
+    }
+    .toggle button + button { border-left: 1.5px solid var(--apex-red); }
+    .toggle button.active { background: #f0d0d4; }
+
+    .tz { font-size: 0.72rem; color: var(--muted); margin-bottom: 10px; }
+    .radio-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .radio-row {
+      display: flex; align-items: center; gap: 12px; padding: 14px 14px;
+      border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; background: #fff;
+      text-align: left; font: inherit; width: 100%;
+    }
+    .radio-row.selected { border-color: var(--apex-red); box-shadow: 0 1px 4px rgba(181,31,53,0.15); }
+    .radio-dot {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid #c4c7cc; flex-shrink: 0;
+    }
+    .radio-row.selected .radio-dot {
+      border-color: var(--apex-red);
+      background: radial-gradient(circle, var(--apex-red) 45%, transparent 50%);
+    }
+    .check-row {
+      display: flex; align-items: flex-start; gap: 10px; margin: 10px 0 14px;
+      font-size: 0.88rem; cursor: pointer;
+    }
+    .check-row input { margin-top: 3px; accent-color: var(--apex-red); }
+    .hr { border: none; border-top: 1px solid #eee; margin: 16px 0; }
+    .summary-block { margin-bottom: 8px; }
+    .summary-block .title-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+    }
+    .summary-block .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .tag {
+      font-size: 0.7rem; background: #f3f4f6; color: var(--muted);
+      padding: 3px 8px; border-radius: 4px; font-weight: 600;
+    }
+    .meta-row {
+      display: flex; align-items: center; gap: 8px; font-size: 0.88rem; margin-bottom: 4px; color: var(--text);
+    }
+    .upload-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px;
+      background: #f3f4f6; font: inherit; font-weight: 600; font-size: 0.85rem; cursor: default;
+      color: var(--gray-btn-text); margin-bottom: 6px;
+    }
+    .help { font-size: 0.72rem; color: var(--muted); margin-bottom: 12px; }
+    .link-red { color: var(--apex-red); font-weight: 700; text-decoration: none; }
+
+    .footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px 18px; border-top: 1px solid #eee; flex-shrink: 0;
+    }
+    .btn {
+      padding: 11px 20px; border-radius: 5px; border: none;
+      font: inherit; font-weight: 700; font-size: 0.9rem; cursor: pointer; min-width: 120px; height: 40px;
+    }
+    .btn-back { background: var(--gray-btn); color: var(--gray-btn-text); }
+    .btn-continue { background: var(--apex-red); color: #fff; }
+    .btn-continue:hover { background: var(--apex-red-dark); }
+    .btn-continue:disabled { background: var(--apex-red-disabled); cursor: default; }
+    .error { color: var(--apex-red); font-size: 0.8rem; margin-bottom: 8px; display: none; }
+    .error.show { display: block; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .confirm { text-align: center; padding: 12px 0; }
+    .confirm .big-check {
+      width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 50%;
+      background: #dcfce7; color: #16a34a; font-size: 1.6rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .demo-note {
+      text-align: center; font-size: 0.68rem; color: var(--muted);
+      padding: 0 16px 12px; flex-shrink: 0;
+    }
+    .demo-note a { color: var(--apex-red); font-weight: 700; text-decoration: none; }
+    .cal-nav {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+    }
+    .cal-nav .month { font-weight: 700; }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 14px; text-align: center;
+    }
+    .cal-grid .dow { font-size: 0.7rem; color: var(--muted); font-weight: 600; padding: 4px 0; }
+    .cal-grid .day {
+      border: none; background: transparent; padding: 8px 0; border-radius: 6px;
+      font: inherit; font-size: 0.85rem; cursor: pointer;
+    }
+    .cal-grid .day.selected { background: var(--apex-red); color: #fff; font-weight: 700; }
+    .cal-grid .day.muted { color: #c4c7cc; cursor: default; }
+
+    html.embed, body.embed {
+      background: #fff !important;
+      min-height: 100%;
+      height: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    body.embed .shell {
+      max-height: none;
+      height: auto;
+      min-height: 100%;
+      box-shadow: none;
+      border-radius: 0;
+      max-width: 100%;
+    }
+    html.embed, body.embed { overflow: hidden; }
+    .demo-note { display: none !important; }
+    body.embed .close-x {
+      display: flex !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      align-items: center;
+      justify-content: center;
+      width: 36px !important;
+      height: 36px !important;
+      background: transparent !important;
+      border: none;
+      color: #fff !important;
+      font-size: 1.75rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 1 !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+      position: relative;
+      z-index: 5;
+    }
+    body.embed .close-x::before,
+    body.embed .close-x::after { content: none !important; display: none !important; }
+    body.embed .close-x::before,
+    body.embed .close-x::after { content: none !important; display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="shell" role="dialog" aria-label="Book Online Now">
+    <div class="topbar">
+      <div class="topbar-brand">
+        <img src="assets/logo.png" alt="Apex" />
+        <div class="divider" aria-hidden="true"></div>
+        <div class="topbar-titles">
+          <div class="name">APEX GENERAL</div>
+          <div class="sub">Book Online Now</div>
+        </div>
+      </div>
+      <button class="close-x" type="button" title="Close" id="booking-close-x">×</button>
+    </div>
+    <div class="progress" id="progress"></div>
+    <div class="body">
+      <!-- Location -->
+      <div class="panel active" data-step="1">
+        <svg class="van" viewBox="0 0 120 90" aria-hidden="true">
+          <circle cx="60" cy="48" r="34" fill="#f0f0f0"/>
+          <rect x="22" y="40" width="70" height="28" rx="4" fill="#b51f35"/>
+          <rect x="70" y="32" width="28" height="36" rx="3" fill="#fff" stroke="#b51f35" stroke-width="2"/>
+          <circle cx="38" cy="70" r="7" fill="#1a1a1a"/>
+          <circle cx="82" cy="70" r="7" fill="#1a1a1a"/>
+          <path d="M60 18c-7 0-12 5.5-12 12 0 9 12 20 12 20s12-11 12-20c0-6.5-5-12-12-12z" fill="#b51f35"/>
+          <circle cx="60" cy="30" r="4" fill="#fff"/>
+        </svg>
+        <h2 class="center">Where are you?</h2>
+        <p class="hint center">Enter your zip or postal code so we can check if we provide service in your area.</p>
+        <label class="field-label" for="zip">Zip Code<span class="req">*</span></label>
+        <input id="zip" type="text" inputmode="numeric" maxlength="5" />
+        <div class="error" id="err-1">Please enter a valid 5-digit ZIP code.</div>
+      </div>
+
+      <!-- Service -->
+      <div class="panel" data-step="2">
+        <h2>What do you need help with?</h2>
+        <div class="cat-grid" id="cats"></div>
+        <div id="job-wrap" style="display:none">
+          <label class="field-label">Please select your service</label>
+          <div class="chip-row" id="jobs"></div>
+        </div>
+        <div id="spec-wrap" style="display:none">
+          <label class="field-label" id="spec-label">What needs to be repaired?</label>
+          <div class="chip-row" id="specs"></div>
+        </div>
+        <div class="error" id="err-2">Select a trade and service to continue.</div>
+      </div>
+
+      <!-- Schedule -->
+      <div class="panel" data-step="3">
+        <h2>When do you need us?</h2>
+        <div class="toggle" role="group" aria-label="Schedule mode">
+          <button type="button" class="active" data-mode="first" id="mode-first">First Available</button>
+          <button type="button" data-mode="all" id="mode-all">All Appointments</button>
+        </div>
+        <div class="tz" id="tz-line">TIME ZONE · Pacific Standard Time</div>
+        <div id="first-mode">
+          <div class="caption">First Available</div>
+          <div class="radio-list" id="first-slots"></div>
+        </div>
+        <div id="all-mode" style="display:none">
+          <div class="cal-nav">
+            <span class="month" id="cal-month"></span>
+            <button type="button" class="btn btn-back" id="cal-today" style="min-width:auto;height:32px;padding:6px 12px">Today</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div class="radio-list" id="day-slots"></div>
+        </div>
+        <div class="error" id="err-3">Choose an appointment window to continue.</div>
+      </div>
+
+      <!-- Contact -->
+      <div class="panel" data-step="4">
+        <h2>How should we reach you?</h2>
+        <div class="field-row">
+          <div>
+            <label class="field-label" for="first">First Name<span class="req">*</span></label>
+            <input id="first" type="text" placeholder="John" />
+          </div>
+          <div>
+            <label class="field-label" for="last">Last Name<span class="req">*</span></label>
+            <input id="last" type="text" placeholder="Doe" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label class="field-label" for="phone">Phone<span class="req">*</span></label>
+            <input id="phone" type="tel" placeholder="(123) 456-7890" />
+          </div>
+          <div>
+            <label class="field-label" for="email">Email<span class="req">*</span></label>
+            <input id="email" type="email" placeholder="you@example.com" />
+          </div>
+        </div>
+        <label class="check-row"><input type="checkbox" id="sms" /> Receive text messages about appointment</label>
+        <hr class="hr" />
+        <h2>Where do you need service?</h2>
+        <div class="field-row">
+          <div>
+            <label class="field-label" for="addr">Address<span class="req">*</span></label>
+            <input id="addr" type="text" placeholder="123 Main St" />
+          </div>
+          <div>
+            <label class="field-label" for="addr2">Address Line 2</label>
+            <input id="addr2" type="text" placeholder="Apt 123" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label class="field-label" for="city">City<span class="req">*</span></label>
+            <input id="city" type="text" placeholder="Anytown" value="Fresno" />
+          </div>
+          <div>
+            <label class="field-label" for="state">State<span class="req">*</span></label>
+            <select id="state"><option value="CA" selected>CA</option><option value="NV">NV</option></select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label class="field-label" for="zip2">Zip Code<span class="req">*</span></label>
+            <input id="zip2" type="text" disabled />
+          </div>
+          <div></div>
+        </div>
+        <div class="error" id="err-4">Complete required contact and address fields.</div>
+      </div>
+
+      <!-- Additional / review -->
+      <div class="panel" data-step="5">
+        <div class="caption">Summary</div>
+        <div class="summary-block" id="summary-svc"></div>
+        <hr class="hr" />
+        <div class="caption">Contact Info</div>
+        <div class="summary-block" id="summary-contact"></div>
+        <hr class="hr" />
+        <h2>Additional Details <span style="font-size:0.85rem;color:var(--muted);font-weight:500">(Optional)</span></h2>
+        <textarea id="details" placeholder="Provide details about your issue here"></textarea>
+        <button class="upload-btn" type="button" disabled title="Coming soon">📎 Upload Files</button>
+        <p class="help">Allowed file types: jpg/jpeg, png, mp4, mov, pdf, heic, webp, webm</p>
+        <label class="check-row"><input type="checkbox" id="terms" /> I agree to the <a class="link-red" href="#" onclick="return false">Terms of Service</a><span class="req">*</span></label>
+        <div class="error" id="err-5">Please agree to the Terms of Service to finish.</div>
+      </div>
+
+      <!-- Local confirmation -->
+      <div class="panel" data-step="6">
+        <div class="confirm">
+          <div class="big-check">✓</div>
+          <h2>Request received</h2>
+          <p class="hint">Nothing was sent to Apex or ServiceTitan.</p>
+          <div id="final-summary" class="summary-block" style="text-align:left;background:#f9fafb;border:1px solid var(--border);border-radius:6px;padding:12px"></div>
+          <div style="margin-top:16px;display:flex;gap:10px;justify-content:center">
+            <button class="btn btn-back" type="button" id="restart">Book another</button>
+            <a class="btn btn-continue" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">Open CRM</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" id="footer">
+      <button class="btn btn-back" type="button" id="back-btn">Back</button>
+      <button class="btn btn-continue" type="button" id="continue-btn">Continue</button>
+    </div>
+</div>
+
+  <script>
+    const ICONS = {
+      location: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.75"/><path d="M12 21s-6.5-5.2-6.5-10.2a6.5 6.5 0 1 1 13 0C18.5 15.8 12 21 12 21z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>`,
+      service: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.75"/><path d="M8 7V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1M3 12h18" stroke="currentColor" stroke-width="1.75"/></svg>`,
+      schedule: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.75"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>`,
+      contact: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="1.75"/><path d="M5.5 19.5c1.2-3.2 3.5-4.75 6.5-4.75s5.3 1.55 6.5 4.75" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>`,
+      additional: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none"><rect x="5" y="3.5" width="14" height="17" rx="2" stroke="currentColor" stroke-width="1.75"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>`,
+      hvac: `<svg class="icon-svg" viewBox="0 0 48 48" fill="none"><path d="M14 34V16c0-2.2 1.8-4 4-4h2M34 34V16c0-2.2-1.8-4-4-4h-2" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><rect x="10" y="32" width="8" height="4" rx="1" stroke="#1a1a1a" stroke-width="2"/><rect x="30" y="32" width="8" height="4" rx="1" stroke="#1a1a1a" stroke-width="2"/><path d="M16 22h4M16 26h3M32 22h-4M32 26h-3" stroke="#b51f35" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="12" r="2.5" fill="#b51f35"/><circle cx="30" cy="12" r="2.5" fill="#b51f35"/></svg>`,
+      electrical: `<svg class="icon-svg" viewBox="0 0 48 48" fill="none"><rect x="18" y="8" width="12" height="16" rx="2" stroke="#1a1a1a" stroke-width="2"/><path d="M22 12v4M26 12v4" stroke="#b51f35" stroke-width="2" stroke-linecap="round"/><path d="M21 24v6c0 2 1.5 4 3 5.5S27 38 27 40M27 24v4" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><path d="M24 14l-2 4h3l-2 4" stroke="#b51f35" stroke-width="1.75" stroke-linejoin="round"/></svg>`,
+      generator: `<svg class="icon-svg" viewBox="0 0 48 48" fill="none"><rect x="10" y="16" width="28" height="18" rx="2" stroke="#1a1a1a" stroke-width="2"/><rect x="14" y="20" width="10" height="8" rx="1" stroke="#1a1a1a" stroke-width="2"/><circle cx="32" cy="24" r="3" stroke="#b51f35" stroke-width="2"/><path d="M16 34v4M32 34v4M12 38h24" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><path d="M36 18l4-3M36 22h4M36 26l4 3" stroke="#b51f35" stroke-width="1.75" stroke-linecap="round"/></svg>`,
+      ducts: `<svg class="icon-svg" viewBox="0 0 48 48" fill="none"><rect x="8" y="18" width="32" height="12" rx="2" stroke="#1a1a1a" stroke-width="2"/><path d="M16 18v12M24 18v12M32 18v12" stroke="#1a1a1a" stroke-width="2"/><path d="M12 24h24" stroke="#b51f35" stroke-width="2" stroke-linecap="round"/></svg>`,
+      lighting: `<svg class="icon-svg" viewBox="0 0 48 48" fill="none"><path d="M24 8v6" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><path d="M14 20c0-5.5 4.5-10 10-10s10 4.5 10 10c0 4-2.5 6.5-4 8H18c-1.5-1.5-4-4-4-8z" stroke="#1a1a1a" stroke-width="2"/><path d="M20 28h8v3a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-3z" stroke="#1a1a1a" stroke-width="2"/><path d="M24 14v6M18 18l2 2M30 18l-2 2" stroke="#b51f35" stroke-width="1.75" stroke-linecap="round"/></svg>`
+    };
+
+    const STEPS = [
+      { key: "location", label: "Location", icon: ICONS.location },
+      { key: "service", label: "Service", icon: ICONS.service },
+      { key: "schedule", label: "Schedule", icon: ICONS.schedule },
+      { key: "contact", label: "Contact", icon: ICONS.contact },
+      { key: "additional", label: "Additional", icon: ICONS.additional }
+    ];
+
+    const CATEGORIES = [
+      { id: "hvac", name: "Heating & Cooling", icon: ICONS.hvac, jobs: ["Repair", "Install", "Other HVAC"],
+        specs: { Repair: ["Repair AC", "Repair HVAC", "Repair ducts & vents", "Repair heating system", "Repair thermostat"],
+                 Install: ["Install AC", "Install furnace", "Install heat pump", "Install thermostat"],
+                 "Other HVAC": ["Maintenance / tune-up", "Indoor air quality", "Other"] } },
+      { id: "electrical", name: "Electrical", icon: ICONS.electrical, jobs: ["Repair", "Install", "Other Electrical"],
+        specs: { Repair: ["Outlet / switch repair", "Panel issue", "Wiring repair"],
+                 Install: ["Panel Upgrade", "EV Charger", "Lighting install", "Outlets & switches"],
+                 "Other Electrical": ["Safety inspection", "Other"] } },
+      { id: "generator", name: "Generator", icon: ICONS.generator, jobs: ["Install", "Repair", "Maintenance"],
+        specs: { Install: ["Standby generator install"], Repair: ["Generator repair"], Maintenance: ["Generator service"] } },
+      { id: "ducts", name: "Ducts", icon: ICONS.ducts, jobs: ["Seal / Repair", "Redesign", "Inspection"],
+        specs: { "Seal / Repair": ["Seal / Repair"], Redesign: ["Redesign"], Inspection: ["Inspection"] } },
+      { id: "lighting", name: "Lighting", icon: ICONS.lighting, jobs: ["Indoor Lighting", "Outdoor / Landscape", "Other Lighting"],
+        specs: { "Indoor Lighting": ["Indoor Lighting"], "Outdoor / Landscape": ["Outdoor / Landscape"], "Other Lighting": ["Other Lighting"] } }
+    ];
+
+    const FIRST_SLOTS = [
+      "Tue, Nov 10, 10 AM - 1 PM",
+      "Wed, Nov 11, 10 AM - 1 PM",
+      "Thu, Nov 12, 10 AM - 1 PM"
+    ];
+
+    const state = {
+      step: 1, zip: "", category: null, job: null, spec: null,
+      mode: "first", slot: "", calDay: 10,
+      first: "", last: "", phone: "", email: "", sms: false,
+      addr: "", addr2: "", city: "Fresno", state: "CA", details: "", terms: false
+    };
+
+    function esc(s) {
+      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    function renderProgress() {
+      const el = document.getElementById("progress");
+      el.innerHTML = "";
+      STEPS.forEach((s, i) => {
+        if (i > 0) {
+          const line = document.createElement("div");
+          line.className = "prog-line" + (state.step > i || state.step === 6 ? " done" : "");
+          el.appendChild(line);
+        }
+        const item = document.createElement("div");
+        const n = i + 1;
+        item.className = "prog-item" + (state.step === n ? " active" : "") + (state.step > n || state.step === 6 ? " done" : "");
+        item.innerHTML = `<div class="circle">${s.icon}</div><div class="label">${s.label}</div>`;
+        el.appendChild(item);
+      });
+      el.style.display = state.step === 6 ? "none" : "flex";
+    }
+
+    function renderCats() {
+      const wrap = document.getElementById("cats");
+      wrap.innerHTML = "";
+      CATEGORIES.forEach((c) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "cat-card" + (state.category && state.category.id === c.id ? " selected" : "");
+        b.innerHTML = `<span class="check">✓</span><div class="icon">${c.icon}</div><div class="name">${c.name}</div>`;
+        b.addEventListener("click", () => {
+          state.category = c; state.job = null; state.spec = null;
+          renderCats(); renderJobs(); renderSpecs(); updateContinue();
+        });
+        wrap.appendChild(b);
+      });
+    }
+
+    function renderJobs() {
+      const wrap = document.getElementById("job-wrap");
+      const list = document.getElementById("jobs");
+      if (!state.category) { wrap.style.display = "none"; return; }
+      wrap.style.display = "block";
+      list.innerHTML = "";
+      state.category.jobs.forEach((name) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip" + (state.job === name ? " selected" : "");
+        b.textContent = name;
+        b.addEventListener("click", () => {
+          state.job = name; state.spec = null;
+          renderJobs(); renderSpecs(); updateContinue();
+        });
+        list.appendChild(b);
+      });
+    }
+
+    function renderSpecs() {
+      const wrap = document.getElementById("spec-wrap");
+      const list = document.getElementById("specs");
+      if (!state.category || !state.job) { wrap.style.display = "none"; return; }
+      const opts = (state.category.specs[state.job] || [state.job]);
+      wrap.style.display = "block";
+      document.getElementById("spec-label").textContent =
+        state.job === "Repair" ? "What needs to be repaired?" :
+        state.job === "Install" ? "What needs to be installed?" : "Please select an option";
+      list.innerHTML = "";
+      opts.forEach((name) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip" + (state.spec === name ? " selected" : "");
+        b.textContent = name;
+        b.addEventListener("click", () => { state.spec = name; renderSpecs(); updateContinue(); });
+        list.appendChild(b);
+      });
+    }
+
+    function renderFirstSlots() {
+      const list = document.getElementById("first-slots");
+      list.innerHTML = "";
+      FIRST_SLOTS.forEach((t) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "radio-row" + (state.slot === t ? " selected" : "");
+        b.innerHTML = `<span class="radio-dot"></span><span>${t}</span>`;
+        b.addEventListener("click", () => { state.slot = t; renderFirstSlots(); renderDaySlots(); updateContinue(); });
+        list.appendChild(b);
+      });
+    }
+
+    function renderCalendar() {
+      document.getElementById("cal-month").textContent = "Nov 2026";
+      const grid = document.getElementById("cal-grid");
+      grid.innerHTML = "";
+      ["Su","Mo","Tu","We","Th","Fr","Sa"].forEach((d) => {
+        const s = document.createElement("div"); s.className = "dow"; s.textContent = d; grid.appendChild(s);
+      });
+      // Nov 2026 starts on Sunday
+      for (let day = 1; day <= 30; day++) {
+        const b = document.createElement("button");
+        b.type = "button";
+        const past = day < 6;
+        b.className = "day" + (state.calDay === day ? " selected" : "") + (past ? " muted" : "");
+        b.textContent = day;
+        if (!past) b.addEventListener("click", () => {
+          state.calDay = day;
+          state.slot = `Tue, Nov ${day}, 10 AM - 1 PM`.replace("Tue", ["Su","Mo","Tu","We","Th","Fr","Sa"][new Date(2026,10,day).getDay()]);
+          // simplify: use fixed label style
+          const wd = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(2026,10,day).getDay()];
+          state.slot = `${wd}, Nov ${day}, 10 AM - 1 PM`;
+          renderCalendar(); renderDaySlots(); updateContinue();
+        });
+        grid.appendChild(b);
+      }
+    }
+
+    function renderDaySlots() {
+      const list = document.getElementById("day-slots");
+      list.innerHTML = "";
+      if (state.mode !== "all") return;
+      const t = state.slot || `Tue, Nov ${state.calDay}, 10 AM - 1 PM`;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "radio-row selected";
+      b.innerHTML = `<span class="radio-dot"></span><span>${esc(t)}</span>`;
+      list.appendChild(b);
+    }
+
+    function renderReview() {
+      document.getElementById("summary-svc").innerHTML = `
+        <div class="title-row"><div style="width:40px;height:40px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center">${state.category ? state.category.icon : ""}</div>
+        <strong>${esc(state.category ? state.category.name : "")}</strong></div>
+        <div class="tags"><span class="tag">${esc(state.job || "")}</span><span class="tag">${esc(state.spec || "")}</span></div>
+        <div class="meta-row">🕒 ${esc(state.slot)}</div>
+        <div class="meta-row">📍 ${esc(state.city)}, ${esc(state.state)}, ${esc(state.zip)}</div>`;
+      document.getElementById("summary-contact").innerHTML = `
+        <strong>${esc(state.first + " " + state.last)}</strong>
+        <div class="meta-row">📞 ${esc(state.phone)}</div>
+        <div class="meta-row">✉️ ${esc(state.email)}</div>
+        <div class="meta-row">📍 ${esc(state.addr)}${state.addr2 ? ", " + esc(state.addr2) : ""}</div>`;
+    }
+
+    function showStep(n) {
+      state.step = n;
+      document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", Number(p.dataset.step) === n));
+      document.getElementById("footer").style.display = n === 6 ? "none" : "flex";
+      document.getElementById("back-btn").style.visibility = n === 1 ? "hidden" : "visible";
+      document.getElementById("continue-btn").textContent = n === 5 ? "Finish Booking" : "Continue";
+      if (n === 4) document.getElementById("zip2").value = state.zip;
+      if (n === 5) renderReview();
+      renderProgress();
+      updateContinue();
+    }
+
+    function canContinue() {
+      if (state.step === 1) return /^\d{5}$/.test(document.getElementById("zip").value.trim());
+      if (state.step === 2) return !!(state.category && state.job && state.spec);
+      if (state.step === 3) return !!state.slot;
+      if (state.step === 4) {
+        return ["first","last","phone","email","addr","city"].every((id) => document.getElementById(id).value.trim())
+          && document.getElementById("email").value.includes("@");
+      }
+      if (state.step === 5) return document.getElementById("terms").checked;
+      return false;
+    }
+
+    function updateContinue() {
+      document.getElementById("continue-btn").disabled = !canContinue();
+    }
+
+    ["zip","first","last","phone","email","addr","addr2","city","details"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", updateContinue);
+    });
+    document.getElementById("terms").addEventListener("change", updateContinue);
+    document.getElementById("state").addEventListener("change", updateContinue);
+
+    document.getElementById("mode-first").addEventListener("click", () => {
+      state.mode = "first";
+      document.getElementById("mode-first").classList.add("active");
+      document.getElementById("mode-all").classList.remove("active");
+      document.getElementById("first-mode").style.display = "block";
+      document.getElementById("all-mode").style.display = "none";
+    });
+    document.getElementById("mode-all").addEventListener("click", () => {
+      state.mode = "all";
+      document.getElementById("mode-all").classList.add("active");
+      document.getElementById("mode-first").classList.remove("active");
+      document.getElementById("first-mode").style.display = "none";
+      document.getElementById("all-mode").style.display = "block";
+      renderCalendar(); renderDaySlots();
+    });
+
+    function validate() {
+      const err = document.getElementById("err-" + state.step);
+      if (!canContinue()) { if (err) err.classList.add("show"); return false; }
+      if (err) err.classList.remove("show");
+      if (state.step === 1) state.zip = document.getElementById("zip").value.trim();
+      if (state.step === 4) {
+        state.first = document.getElementById("first").value.trim();
+        state.last = document.getElementById("last").value.trim();
+        state.phone = document.getElementById("phone").value.trim();
+        state.email = document.getElementById("email").value.trim();
+        state.sms = document.getElementById("sms").checked;
+        state.addr = document.getElementById("addr").value.trim();
+        state.addr2 = document.getElementById("addr2").value.trim();
+        state.city = document.getElementById("city").value.trim();
+        state.state = document.getElementById("state").value;
+      }
+      if (state.step === 5) state.details = document.getElementById("details").value.trim();
+      return true;
+    }
+
+    const WEBHOOK_URL = "https://lightseagreen-hawk-553270.hostingersite.com/webhook/apex-booking";
+
+    async function finish() {
+      const btn = document.getElementById("continue-btn");
+      btn.disabled = true;
+      btn.textContent = "Submitting…";
+      const payload = {
+        zip: state.zip,
+        serviceType: state.category ? state.category.name : "",
+        serviceDetail: [state.job, state.spec].filter(Boolean).join(" / "),
+        preferredSlot: state.slot || "First Available",
+        firstName: state.first,
+        lastName: state.last,
+        phone: state.phone,
+        email: state.email,
+        address: [state.addr, state.addr2].filter(Boolean).join(", "),
+        city: state.city,
+        state: state.state,
+        details: state.details,
+        smsOptIn: !!(document.getElementById("sms") && document.getElementById("sms").checked),
+      };
+      let conf = "AG-" + Date.now().toString().slice(-6);
+      let note = "Saved locally.";
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          note = "Booking confirmed · " + (data.submittedAt || "ok");
+          conf = "AG-" + String(data.submittedAt || Date.now()).replace(/\D/g, "").slice(-8);
+        } else {
+          note = "Webhook responded " + res.status + " — shown as local confirm.";
+        }
+      } catch (err) {
+        note = "Could not reach webhook (CORS/offline) — local confirm only.";
+      }
+      document.getElementById("final-summary").innerHTML = `
+        <div><strong>${esc(conf)}</strong></div>
+        <div style="color:#666;font-size:12px;margin:4px 0 8px">${esc(note)}</div>
+        <div>${esc(state.category.name)} · ${esc(state.job)} · ${esc(state.spec)}</div>
+        <div>${esc(state.slot)}</div>
+        <div>${esc(state.first + " " + state.last)} · ${esc(state.phone)}</div>
+        <div>${esc(state.addr)}, ${esc(state.city)}, ${esc(state.state)} ${esc(state.zip)}</div>
+        ${state.details ? `<div style="margin-top:6px">${esc(state.details)}</div>` : ""}`;
+      showStep(6);
+      btn.disabled = false;
+      btn.textContent = "Finish Booking";
+    }
+
+    document.getElementById("continue-btn").addEventListener("click", () => {
+      if (!validate()) return;
+      if (state.step === 5) finish();
+      else showStep(state.step + 1);
+    });
+    document.getElementById("back-btn").addEventListener("click", () => {
+      if (state.step > 1) showStep(state.step - 1);
+    });
+    document.getElementById("restart").addEventListener("click", () => {
+      state.category = null; state.job = null; state.spec = null; state.slot = FIRST_SLOTS[0];
+      document.getElementById("details").value = "";
+      document.getElementById("terms").checked = false;
+      renderCats(); renderJobs(); renderSpecs(); renderFirstSlots();
+      showStep(1);
+    });
+
+    state.slot = FIRST_SLOTS[0];
+    renderCats(); renderJobs(); renderSpecs(); renderFirstSlots(); renderCalendar();
+    showStep(1);
+  </script>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var embed = params.get("embed") === "1";
+      if (embed) {
+        document.documentElement.classList.add("embed");
+        document.body.classList.add("embed");
+      }
+      function closeBooking() {
+        if (embed && window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "apex-booking-close" }, "*");
+        } else {
+          location.href = "index.html";
+        }
+      }
+      var btn = document.getElementById("booking-close-x");
+      if (btn) btn.addEventListener("click", closeBooking);
+    })();
+  </script>
+</body>
+</html>

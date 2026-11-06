@@ -1,0 +1,12 @@
+.DS_Store
+*.bak
+*.bak-*
+index.bak-st.html
+assets/e2e-*.png
+assets/apex-firecrawl-shot.png
+assets/apex-live-compare.png
+assets/compare-*.png
+assets/hero-inspect-demo.png
+assets/apex-hero-reference.png
+assets/live-hero/
+.netlify/

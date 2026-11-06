@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apex Air, Heating &amp; Electric</title>
+  <style>
+    :root {
+      --red: #b51f35;
+      --red-bright: #e01322;
+      --red-dark: #8a1524;
+      --black: #0a0a0a;
+      --nav: #0d0d0d;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.78);
+      --light: #f5f5f6;
+      --ink: #141414;
+      --ink-muted: #5a5a5e;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --dark-border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      background: #111;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    /* —— NAV —— */
+    .nav {
+      background: var(--nav);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 72px; gap: 20px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .brand img {
+      height: 64px; width: auto;
+      background: transparent; border-radius: 0; padding: 0;
+      display: block;
+    }
+    .brand { align-items: center; gap: 10px; }
+    .nav-inner { height: 76px; }
+    .brand-tag {
+      display: none; /* logo file is primary; live uses image lockup */
+    }
+    @media (min-width: 900px) {
+      .brand { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .brand-tag {
+        display: block; font-size: 0.58rem; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--red-bright);
+        margin-left: 2px;
+      }
+    }
+    .brand-text {
+      font-weight: 800; font-size: 0.82rem; letter-spacing: 0.08em;
+      line-height: 1.15;
+    }
+    .brand-text span {
+      display: block; font-size: 0.62rem; font-weight: 600;
+      color: var(--red-bright); letter-spacing: 0.1em;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      list-style: none; flex: 1; justify-content: center;
+    }
+    .nav-links > li { position: relative; }
+    .nav-links > li > a,
+    .nav-links > li > button {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 10px 14px; font-size: 0.88rem; font-weight: 600;
+      color: rgba(255,255,255,0.92); background: transparent; border: none;
+      cursor: pointer; font-family: inherit; border-radius: 4px;
+    }
+    .nav-links > li > a:hover,
+    .nav-links > li > button:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .nav-links .chev { font-size: 0.65rem; opacity: 0.7; }
+    .dropdown {
+      display: none; position: absolute; top: 100%; left: 0;
+      min-width: 210px; background: #161616; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px; padding: 8px 0; box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+    }
+    .nav-links > li:hover .dropdown,
+    .nav-links > li:focus-within .dropdown { display: block; }
+    .dropdown a {
+      display: block; padding: 9px 16px; font-size: 0.85rem; color: rgba(255,255,255,0.85);
+    }
+    .dropdown a:hover { background: rgba(196,30,42,0.15); color: #fff; }
+    .dropdown a.drop-all { color: #f5a3ae; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 4px; }
+    .nav-right {
+      display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+    }
+    .nav-phone {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 0.92rem; color: #fff;
+    }
+    .nav-phone svg { width: 16px; height: 16px; color: var(--red-bright); }
+    .btn-book {
+      background: var(--red); color: #fff; font-weight: 800; font-size: 0.8rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 12px 18px; border-radius: 4px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-book:hover { background: var(--red-dark); }
+    .menu-toggle {
+      display: none; background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; padding: 8px 10px; border-radius: 4px; cursor: pointer;
+    }
+
+    /* —— HERO —— */
+    .hero {
+      position: relative; min-height: 520px; height: min(72vh, 720px);
+      display: flex; align-items: center; overflow: hidden;
+      background: #0a0a0a;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+    .hero-bg {
+      background-color: #0a0a0a;
+    }
+    .hero-bg video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      transform: scale(1.02);
+      opacity: 1;
+    }
+    .hero-bg::before {
+      content: "";
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.48) 42%, rgba(0,0,0,0.22) 100%);
+      pointer-events: none;
+    }
+    .hero-bg::after { display: none; }
+    .hero-grid { display: none; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-36px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1400px; margin: 0 auto; padding: 88px 40px 96px;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .hero-inner { padding: 64px 24px 72px; }
+    }
+    .eyebrow {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase; color: #f5a3ae;
+      margin-bottom: 18px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 5.8vw, 4.1rem);
+      font-weight: 800; line-height: 0.95; letter-spacing: -0.035em;
+      max-width: 26ch; margin-bottom: 20px;
+      animation: slideInLeft 0.85s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .hero h1 .line { display: block; }
+    .hero h1 .accent {
+      position: relative; display: inline-block; text-decoration: none; border-bottom: none;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 680px;
+      margin-bottom: 28px; line-height: 1.55;
+      animation: fadeUp 0.8s 0.25s ease both;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .btn-primary {
+      background: var(--red); color: #fff; font-weight: 800; font-size: 0.82rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 14px 22px; border-radius: 4px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: #fff; font-weight: 700; font-size: 0.82rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 12px 20px; border-radius: 4px;
+      border: 2px solid rgba(255,255,255,0.75); cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+    .btn-ghost.dark {
+      color: var(--ink); border-color: rgba(0,0,0,0.25);
+    }
+    .btn-ghost.dark:hover { background: rgba(0,0,0,0.05); border-color: var(--ink); }
+    .hero-proof {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+      font-size: 0.88rem; color: var(--muted); font-weight: 600;
+      animation: fadeUp 0.8s 0.55s ease both;
+    }
+    .stars { color: #f5c242; letter-spacing: 1px; }
+    .dot { opacity: 0.4; }
+
+    .rotator {
+      display: inline-block; position: relative; height: 1.3em; overflow: hidden;
+      vertical-align: bottom; color: #fff; font-weight: 700; min-width: 7ch;
+    }
+    .rotator span {
+      display: block; animation: rotateWords 9s cubic-bezier(.2,.8,.2,1) infinite;
+    }
+    @keyframes rotateWords {
+      0%, 20% { transform: translateY(0); }
+      25%, 45% { transform: translateY(-100%); }
+      50%, 70% { transform: translateY(-200%); }
+      75%, 95% { transform: translateY(-300%); }
+      100% { transform: translateY(0); }
+    }
+
+    /* —— SHARED LAYOUT —— */
+    .wrap {
+      max-width: 1400px; margin: 0 auto; padding: 0 40px;
+    }
+    @media (max-width: 900px) {
+      .wrap { padding: 0 24px; }
+    }
+    .section {
+      padding: 64px 0;
+      border-top: 1px solid transparent;
+    }
+    .section.light, .section.white { border-top-color: rgba(0,0,0,0.06); }
+    .section.dark, .section.alt, .book-band { border-top-color: rgba(255,255,255,0.06); }
+    .section-eyebrow {
+      display: inline-block; font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--red);
+      margin-bottom: 10px;
+    }
+    .section-eyebrow.light { color: #f5a3ae; }
+    .section h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .section-lead {
+      font-size: 1.05rem; max-width: 640px; margin-bottom: 40px;
+    }
+    .section.light {
+      background: var(--light); color: var(--ink);
+    }
+    .section.light .section-lead { color: var(--ink-muted); }
+    .section.dark {
+      background: var(--black); color: #fff;
+    }
+    .section.dark .section-lead { color: var(--muted); }
+    .section.white {
+      background: #fff; color: var(--ink);
+    }
+    .section.white .section-lead { color: var(--ink-muted); }
+    .section.alt {
+      background: #161616; color: #fff;
+    }
+    .section.alt .section-lead { color: var(--muted); }
+
+    /* —— TRUST STRIP —— */
+    .trust-strip {
+      position: relative; z-index: 2;
+      background: #111;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 40px;
+      animation: fadeIn 1s 0.7s ease both;
+    }
+    .trust-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 28px;
+      text-align: left; align-items: center;
+    }
+    .trust-item { display: flex; align-items: center; gap: 12px; }
+    .trust-ico {
+      color: var(--red-bright); width: 28px; height: 28px; flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .trust-ico svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .trust-item strong {
+      display: block; font-size: 0.84rem; margin-bottom: 1px; color: #fff;
+      font-weight: 800; letter-spacing: 0.01em; line-height: 1.2;
+    }
+    .trust-item span { font-size: 0.68rem; color: rgba(255,255,255,0.5); letter-spacing: 0.02em; }
+
+    .badges {
+      background: #f7f7f8;
+      border-top: none;
+      padding: 40px 24px 48px;
+    }
+    .badges-inner {
+      max-width: 1400px; margin: 0 auto; text-align: center;
+    }
+    .badges-title {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #5a5a60;
+      margin-bottom: 28px;
+    }
+    .badge-row {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 36px 56px;
+    }
+    .badge-img {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 0; min-height: 0; padding: 0;
+      background: transparent !important; border: none !important;
+      box-shadow: none !important; border-radius: 0 !important;
+    }
+    .badge-img img {
+      max-height: 96px; width: auto; max-width: 160px;
+      object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
+    }
+
+    /* —— WHAT WE DO —— */
+    .svc-groups {
+      display: block;
+    }
+    .svc-list {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 12px !important;
+    }
+    #services-electrical { margin-top: 36px; }
+    .svc-group-label {
+      display: inline-flex !important;
+      align-items: center; gap: 10px;
+      background: #0a0a0a; color: #fff;
+      border-radius: 2px;
+      padding: 8px 14px;
+      margin-bottom: 16px !important;
+      border-bottom: none !important;
+      letter-spacing: 0.08em;
+    }
+    .svc-group-label.electrical { background: var(--red); }
+    .svc-group-label .num {
+      font-size: 0.78rem; font-weight: 800; color: #fff;
+      letter-spacing: 0.14em; opacity: 0.9;
+    }
+    .svc-group-label h3 {
+      font-size: 0.92rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      margin: 0; color: #fff;
+    }
+    .svc-card {
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 16px 16px 14px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: none;
+    }
+    .svc-card:hover {
+      border-color: rgba(181,31,53,0.55);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transform: none;
+    }
+    .svc-card h4 {
+      font-size: 0.92rem; font-weight: 800; margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .svc-card p {
+      font-size: 0.86rem; color: var(--ink-muted); margin-bottom: 10px;
+      line-height: 1.45;
+    }
+    .svc-card .learn {
+      font-size: 0.72rem; font-weight: 800; color: var(--red);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .svc-card .learn:hover { color: var(--red-dark); text-decoration: none; }
+    .svc-card .svc-icon {
+      margin-bottom: 12px; color: var(--red);
+    }
+    .svc-card .svc-icon svg {
+      width: 28px; height: 28px; stroke: currentColor; fill: none;
+      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+      display: block;
+    }
+
+    /* —— WHY APEX —— */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .stat-card {
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+    .stat-card .stat-big {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 800; color: #fff; margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .stat-card .stat-big.red { color: var(--red-bright); }
+    .stat-card h4 {
+      font-size: 0.98rem; font-weight: 800; margin-bottom: 8px;
+    }
+    .stat-card p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.45;
+    }
+
+    /* —— CITIES —— */
+    .city-chips {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px;
+    }
+    .chip {
+      display: inline-block; padding: 10px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      font-weight: 700; font-size: 0.88rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .chip:hover {
+      background: rgba(196,30,42,0.18); border-color: rgba(196,30,42,0.45);
+    }
+    .city-note {
+      font-size: 0.92rem; color: var(--muted);
+    }
+    .city-note a { color: #f5a3ae; font-weight: 700; }
+
+    /* —— CONTACT —— */
+    .contact-card {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px;
+      background: #fff; border: 1px solid var(--border); border-radius: 4px;
+      padding: 32px; box-shadow: 0 8px 28px rgba(0,0,0,0.04);
+    }
+    .contact-card h3 {
+      font-size: 1.35rem; font-weight: 800; margin-bottom: 18px;
+    }
+    .contact-rows { display: grid; gap: 14px; }
+    .contact-row strong {
+      display: block; font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2px;
+    }
+    .contact-row span, .contact-row a {
+      font-size: 1.05rem; font-weight: 700; color: var(--ink);
+    }
+    .contact-row a:hover { color: var(--red); }
+    .contact-cta {
+      background: var(--black); color: #fff; border-radius: 4px;
+      padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 14px;
+    }
+    .contact-cta p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+    .contact-cta .btn-primary { text-align: center; }
+
+    /* —— REVIEWS —— */
+    .review-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .review-card {
+      background: #141414; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px; padding: 22px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .review-card .quote {
+      font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.55;
+      flex: 1;
+    }
+    .review-foot {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--red); color: #fff; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; flex-shrink: 0;
+    }
+    .review-foot strong { display: block; font-size: 0.92rem; }
+    .review-foot span { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+
+    /* —— BLOG —— */
+    .blog-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .blog-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 4px;
+      padding: 24px; display: flex; flex-direction: column; gap: 12px;
+      transition: box-shadow 0.2s, transform 0.15s;
+      height: 100%;
+    }
+    .blog-card:hover {
+      box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+    }
+    .blog-tag {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--red);
+    }
+    .blog-card h3 {
+      font-size: 1.05rem; font-weight: 800; line-height: 1.3;
+    }
+    .blog-card p {
+      font-size: 0.9rem; color: var(--ink-muted); flex: 1;
+    }
+    .blog-card .more {
+      font-size: 0.82rem; font-weight: 700; color: var(--red);
+    }
+    .blog-all {
+      margin-top: 28px; text-align: center;
+    }
+    .blog-all a {
+      font-weight: 800; color: var(--red); font-size: 0.95rem;
+    }
+    .blog-all a:hover { text-decoration: underline; }
+
+    /* —— FAQ —— */
+    .faq-list { display: grid; gap: 10px; max-width: 820px; }
+    details.faq {
+      background: #fff; border: 1px solid var(--border); border-radius: 4px;
+      padding: 0; overflow: hidden;
+    }
+    details.faq summary {
+      list-style: none; cursor: pointer; font-weight: 800; font-size: 1rem;
+      padding: 18px 52px 18px 20px; position: relative; color: var(--ink);
+    }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after {
+      content: "+"; position: absolute; right: 20px; top: 50%;
+      transform: translateY(-50%); font-size: 1.3rem; color: var(--red);
+      font-weight: 400;
+    }
+    details.faq[open] summary::after { content: "–"; }
+    details.faq .faq-body {
+      padding: 0 20px 18px; font-size: 0.95rem; color: var(--ink-muted);
+      line-height: 1.55;
+    }
+    details.faq .faq-body a { color: var(--red); font-weight: 700; }
+
+    /* —— FINANCING BLURB —— */
+    .fin-blurb {
+      background: linear-gradient(135deg, #0f0f0f, #1a0a0c);
+      border: 1px solid rgba(181,31,53,0.4);
+      border-radius: 4px; padding: 28px;
+      display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+    }
+    .fin-blurb h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+    .fin-blurb p { color: var(--muted); max-width: 560px; }
+
+    /* —— BOOK CTA —— */
+    .book-band {
+      background: linear-gradient(120deg, #0a0a0a 0%, #1a0a0c 50%, #2a0e12 100%);
+      border-top: 1px solid rgba(196,30,42,0.3);
+      border-bottom: 1px solid rgba(196,30,42,0.3);
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 28px 0 32px;
+    }
+    .step {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; padding: 20px;
+    }
+    .step .n {
+      display: inline-flex; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--red); color: #fff; font-weight: 800; font-size: 0.85rem;
+      align-items: center; justify-content: center; margin-bottom: 12px;
+    }
+    .step p { font-size: 0.95rem; color: rgba(255,255,255,0.8); }
+
+    /* —— FOOTER —— */
+    .site-footer {
+      background: #070707; color: rgba(255,255,255,0.75);
+      padding: 56px 0 24px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .brand-text { margin-bottom: 12px; color: #fff; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.5; max-width: 280px; }
+    .footer-col h5 {
+      color: #fff; font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 14px; font-weight: 800;
+    }
+    .footer-col ul { list-style: none; display: grid; gap: 8px; }
+    .footer-col a {
+      font-size: 0.9rem; color: rgba(255,255,255,0.65);
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 18px; display: flex; flex-wrap: wrap; gap: 12px 24px;
+      justify-content: space-between; font-size: 0.78rem; color: rgba(255,255,255,0.45);
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.55); }
+    .footer-bottom a:hover { color: #f5a3ae; }
+
+    .footer-note {
+      text-align: center; padding: 14px; font-size: 0.75rem; color: #666;
+      background: #050505;
+    }
+    .footer-note a { color: var(--red-bright); font-weight: 700; }
+
+    /* —— RESPONSIVE —— */
+    @media (max-width: 980px) {
+      .svc-groups,
+      .stat-grid,
+      .review-grid,
+      .blog-grid,
+      .steps,
+      .footer-grid,
+      .contact-card { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .fin-blurb { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .nav.open .nav-links {
+        display: flex; flex-direction: column; position: absolute;
+        top: 72px; left: 0; right: 0; background: #111; padding: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.08); align-items: stretch;
+        z-index: 60;
+      }
+      .nav.open .dropdown { position: static; display: none; box-shadow: none; border: none; }
+      .nav.open .nav-links > li:focus-within .dropdown { display: block; }
+      .trust-inner { grid-template-columns: 1fr 1fr; }
+      .nav-phone span { display: none; }
+    }
+    @media (max-width: 640px) {
+      .svc-groups,
+      .stat-grid,
+      .review-grid,
+      .blog-grid,
+      .steps,
+      .footer-grid,
+      .contact-card,
+      .trust-inner { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .section { padding: 56px 0; }
+    }
+
+  /* ---- Apex font + polish overrides ---- */
+  @font-face{font-family:"Sofia Pro";src:url(assets/fonts/sofia-regular.woff2) format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Sofia Pro";src:url(assets/fonts/sofia-bold.woff2) format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"Sofia Pro";src:url(assets/fonts/sofia-regular-italic.woff2) format("woff2");font-weight:400;font-style:italic}
+  @font-face{font-family:"Sofia Pro";src:url(assets/fonts/sofia-bold-italic.woff2) format("woff2");font-weight:700;font-style:italic}
+  body,p,li,input,textarea{font-family:"Nunito Sans",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6}
+  h1,h2,h3,h4,h5,.nav,.nav a,button,.btn,.section-eyebrow,.svc-group-label,.blog-tag{font-family:"Sofia Pro","Nunito Sans",sans-serif}
+  h2{font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-0.03em;line-height:1.08;text-transform:none}
+  .section-eyebrow{letter-spacing:0.2em!important;font-weight:800!important}
+  .hero h1{font-family:"Sofia Pro","Nunito Sans",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(42px,6vw,70px);line-height:0.95;letter-spacing:-0.025em;max-width:26ch;text-shadow:0 3px 18px rgba(0,0,0,.5)}
+  .hero h1 .line{letter-spacing:-0.03em}
+  .svc-card{padding:16px 16px 14px!important;overflow:hidden;border:1px solid rgba(0,0,0,.1);border-radius:4px!important;background:#fff}
+  .svc-card .svc-icon{margin-bottom:10px;color:#b51f35}
+  .svc-card h4{font-size:13px;margin-top:0;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+  .svc-card .learn{display:inline-block;text-transform:uppercase;font-size:11px;letter-spacing:.1em;color:#b51f35;font-weight:800}
+  .blog-card{padding:22px 20px!important;overflow:hidden}
+  .blog-card .more{display:inline-block}
+  .trust-badges img,[class*=badge] img{object-fit:contain}
+
+  /* Booking modal — namespaced */
+  #booking-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  #booking-modal.open { display: flex; }
+  #booking-modal[hidden] { display: none !important; }
+  #booking-modal .bm-scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+  }
+  #booking-modal .bm-panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    height: min(88vh, 640px);
+    background: #ffffff !important;
+    border-radius: 8px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    overflow: hidden;
+    border: 1px solid rgba(181,31,53,0.35);
+  }
+  #booking-modal .bm-close { display: none !important; /* use iframe topbar X */
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  #booking-modal .bm-close:hover { background: #b51f35; }
+  #booking-modal iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+  }
+  body.booking-modal-open { overflow: hidden; }
+  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <img src="assets/logo.png" alt="Apex Air, Heating &amp; Electric" />
+        <span class="brand-tag">Air · Heating · Electric</span>
+      </a>
+
+      <ul class="nav-links">
+        <li>
+          <button type="button">Services <span class="chev">▾</span></button>
+          <div class="dropdown" role="menu">
+            <a href="#services-hvac">HVAC</a>
+            <a href="#services-electrical">Electrical</a>
+            <a href="#services-generators">Generators</a>
+            <a href="#services-emergency">Emergency Repairs</a>
+            <a href="#services-electrical">Control Panels</a>
+            <a class="drop-all" href="#services-hvac">All Services →</a>
+          </div>
+        </li>
+        <li><a href="#financing">Financing</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a class="nav-phone" href="tel:5596680083" title="Call">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h2a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.1 9.9a16 16 0 0 0 6 6l1.5-1.1a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg>
+          <span>(559) 668-0083</span>
+        </a>
+        <a class="btn-book" href="booking.html">Book Now</a>
+        <button class="menu-toggle" type="button" id="menu-btn" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <video autoplay muted loop playsinline poster="assets/hero-poster-live.jpg">
+        <source src="assets/hero-bg.mp4" type="video/mp4" />
+      </video>
+      
+    </div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="eyebrow">Fresno · Clovis · Visalia · Madera</div>
+      <h1>
+        <span class="line">Home comfort</span>
+        <span class="line">&amp; power,</span>
+        <span class="line">at its apex.</span>
+      </h1>
+      <p class="hero-sub">
+        Fresno's 5.0-star HVAC and electrical team. Straightforward pricing, licensed pros, and appointments you can book online in under a minute.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="booking.html">Book an Appointment</a>
+        <a class="btn-ghost" href="tel:5596680083">Call (559) 668-0083</a>
+      </div>
+      <div class="hero-proof">
+        <span class="stars">★★★★★</span>
+        <strong style="color:#fff">5.0 rating</strong>
+        <span class="dot">·</span>
+        <span>246 Google reviews</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Trust strip + badges -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <div class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6L22 10l-5 4.6L18.2 22 12 18.3 5.8 22 7 14.6 2 10l7.1-1.4L12 2z" fill="currentColor" stroke="none"/></svg></div>
+        <div><strong>5.0★ 246 Google Reviews</strong><span>Verified on Google</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div><strong>Licensed &amp; Insured</strong><span>CA Lic #1072290</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+        <div><strong>Best of Central California</strong><span>2023 – 2026</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><strong>Open 7 Days a Week</strong><span>Emergency line 24/7</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="badges">
+    <div class="badges-inner">
+      <div class="badges-title">Trusted &amp; Recognized</div>
+      <div class="badge-row">
+        <div class="badge-img">
+          <img src="assets/google-5star.png" alt="Google 5.0 rating" width="160" height="110" loading="lazy" />
+        </div>
+        <div class="badge-img">
+          <img src="assets/best-of-central-ca.png" alt="Fresno Bee Best of Central California 2023–2026" width="120" height="140" loading="lazy" />
+        </div>
+        <div class="badge-img">
+          <img src="assets/bbb-a-plus.png" alt="BBB A+ Rating" width="120" height="140" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. What We Do -->
+  <section class="section light" id="services-hvac">
+    <div class="wrap">
+      <div class="section-eyebrow">What We Do</div>
+      <h2>Everything under one roof</h2>
+      <p class="section-lead">One call covers your heating, cooling, and electrical — handled by the same licensed team, start to finish.</p>
+
+      <div class="svc-groups">
+        <div>
+          <div class="svc-group-label">
+            <span class="num">01</span>
+            <h3>HVAC</h3>
+          </div>
+          <div class="svc-list">
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M4.9 6.5l3.2-1.2M4.9 6.5l1.2 3.2M19.1 17.5l-3.2 1.2M19.1 17.5l-1.2-3.2M4.9 17.5l3.2 1.2M4.9 17.5l1.2-3.2M19.1 6.5l-3.2-1.2M19.1 6.5l-1.2 3.2"/></svg></div>
+              <h4>AC Repair &amp; Install</h4>
+              <p>Fast diagnostics and repairs, plus full system installs sized right for Valley summers.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22c4-2.5 6-5.8 6-9.5 0-3.2-1.5-5.2-3-6.5 0 2-1 3.5-2.5 4.2C12.2 6 11 3.8 12 2c-4 2.2-6 5.5-6 9.5C6 16.2 8 19.5 12 22z"/></svg></div>
+              <h4>Furnace Repair &amp; Install</h4>
+              <p>Reliable heat when temperatures drop, from tune-ups to full furnace replacement.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-2.5 2.5-2.5z"/></svg></div>
+              <h4>Maintenance Plans</h4>
+              <p>Seasonal tune-ups that catch small problems before they become expensive ones.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h9a3 3 0 1 0-3 3"/></svg></div>
+              <h4>Ductwork</h4>
+              <p>Sealing, repair, and redesign so conditioned air actually makes it to every room.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/><path d="M12 17v2"/></svg></div>
+              <h4>Thermostat Installation</h4>
+              <p>Smart and programmable thermostats set up and dialed in for your household.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 3 17 3s1 5-1.5 9.5"/><path d="M12 12c-2 3-4 5.5-6 7"/></svg></div>
+              <h4>Indoor Air Quality</h4>
+              <p>Filtration and purification upgrades for cleaner, healthier air inside your home.</p>
+              <a class="learn" href="#services-hvac">Learn more →</a>
+            </article>
+          </div>
+        </div>
+
+        <div id="services-electrical">
+          <div class="svc-group-label electrical">
+            <span class="num">02</span>
+            <h3>Electrical</h3>
+          </div>
+          <div class="svc-list">
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 10-13h-7l0-7z"/></svg></div>
+              <h4>Panel Upgrades</h4>
+              <p>Modern panels with the capacity your home actually needs, installed to code.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0V8z"/><path d="M12 17v5"/></svg></div>
+              <h4>Wiring &amp; Rewiring</h4>
+              <p>Safe, up-to-code wiring for renovations, additions, and aging electrical systems.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div>
+              <h4>Lighting Installation</h4>
+              <p>Indoor and outdoor lighting design and install, from recessed cans to landscape lighting.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17h14v-5l-2-6H7l-2 6v5z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M11 9l-1.5 3h3L11 15"/></svg></div>
+              <h4>EV Charger Installation</h4>
+              <p>Level 2 home charging installed safely and sized to your panel and vehicle.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8v4M15 8v4M12 14v3"/></svg></div>
+              <h4>Outlets &amp; Switches</h4>
+              <p>New outlets, GFCI upgrades, and switch replacements done safely and neatly.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+            <article class="svc-card">
+              <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+              <h4>Electrical Safety Inspections</h4>
+              <p>Full home inspections that flag hazards before they turn into bigger problems.</p>
+              <a class="learn" href="#services-electrical">Learn more →</a>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- hidden anchors for nav items -->
+      <div id="services-generators" style="height:1px;margin-top:24px"></div>
+      <div id="services-emergency" style="height:1px"></div>
+    </div>
+  </section>
+
+  <!-- 3. Why Apex -->
+  <section class="section dark" id="about">
+    <div class="wrap">
+      <div class="section-eyebrow light">Why Apex</div>
+      <h2>Reputation built one job at a time</h2>
+      <p class="section-lead">No gimmicks — just licensed work, honest pricing, and a team that shows up when it says it will.</p>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-big red">5.0★</div>
+          <h4>246 Google Reviews</h4>
+          <p>A perfect rating built one appointment at a time across the Central Valley.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-big">#1072290</div>
+          <h4>Licensed &amp; Insured</h4>
+          <p>Fully licensed in California, so every job is done to code and backed by real coverage.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-big red">’23–’26</div>
+          <h4>Best of Central California</h4>
+          <p>Voted the region’s top HVAC &amp; electrical company four years running.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-big">7/7</div>
+          <h4>Open Every Day</h4>
+          <p>No overtime surcharges for weekends — we’re open and staffed seven days a week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Where We Work -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-eyebrow light">Where We Work</div>
+      <h2>Serving the Central Valley</h2>
+      <p class="section-lead">HVAC and electrical service across Fresno County and neighboring cities.</p>
+      <div class="city-chips">
+        <a class="chip" href="#contact">Fresno</a>
+        <a class="chip" href="#contact">Clovis</a>
+        <a class="chip" href="#contact">Madera</a>
+        <a class="chip" href="#contact">Madera Ranchos</a>
+        <a class="chip" href="#contact">Sanger</a>
+        <a class="chip" href="#contact">Kingsburg</a>
+        <a class="chip" href="#contact">Fowler</a>
+        <a class="chip" href="#contact">Kerman</a>
+        <a class="chip" href="#contact">Visalia</a>
+      </div>
+      <p class="city-note">Don’t see your city listed? Call <a href="tel:5596680083">(559) 668-0083</a> — we may still be able to help.</p>
+    </div>
+  </section>
+
+  <!-- 5. Visit or Contact Us -->
+  <section class="section white" id="contact">
+    <div class="wrap">
+      <div class="section-eyebrow">Visit or Contact Us</div>
+      <h2>We’re easy to reach</h2>
+      <p class="section-lead">Stop by, call, or book online — same licensed Apex team either way.</p>
+      <div class="contact-card">
+        <div>
+          <h3>Apex Air, Heating &amp; Electric</h3>
+          <div class="contact-rows">
+            <div class="contact-row">
+              <strong>Address</strong>
+              <span>5796 S Elm Ave, Fresno, CA 93706</span>
+            </div>
+            <div class="contact-row">
+              <strong>Phone</strong>
+              <a href="tel:5596680083">(559) 668-0083</a>
+            </div>
+            <div class="contact-row">
+              <strong>Hours</strong>
+              <span>Open 7 days a week</span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-cta">
+          <h3 style="margin:0;font-size:1.2rem;">Ready to schedule?</h3>
+          <p>Live openings on our calendar — book in under a minute.</p>
+          <a class="btn-primary" href="booking.html">Book Now</a>
+          <a class="btn-ghost" href="tel:5596680083" style="text-align:center;">Call (559) 668-0083</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Customer Reviews -->
+  <section class="section dark">
+    <div class="wrap">
+      <div class="section-eyebrow light">Customer Reviews</div>
+      <h2>246 five-star reviews and counting</h2>
+      <p class="section-lead">Real homeowners across the Central Valley — no cherry-picked fluff.</p>
+      <div class="review-grid">
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“Our AC went out during a heat wave and Apex had someone out same-day. Fair price, no upsell pressure. Now our go-to for HVAC.”</p>
+          <div class="review-foot">
+            <div class="avatar">MR</div>
+            <div>
+              <strong>Marcus R.</strong>
+              <span>Clovis, CA</span>
+            </div>
+          </div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“Had them upgrade our panel and add an EV charger in the same visit. Clean work, explained everything, left the garage spotless.”</p>
+          <div class="review-foot">
+            <div class="avatar">DP</div>
+            <div>
+              <strong>Dana P.</strong>
+              <span>Fresno, CA</span>
+            </div>
+          </div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“Booked online in two minutes, tech showed up on time, furnace fixed in under an hour. This is how home service should work.”</p>
+          <div class="review-foot">
+            <div class="avatar">JT</div>
+            <div>
+              <strong>Jennifer T.</strong>
+              <span>Visalia, CA</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. From the Blog -->
+  <section class="section light" id="blog">
+    <div class="wrap">
+      <div class="section-eyebrow">From the Blog</div>
+      <h2>Guides for Central Valley homeowners</h2>
+      <p class="section-lead">Real numbers and honest advice on HVAC, electrical, and home comfort — written by the Apex team.</p>
+      <div class="blog-grid">
+        <a class="blog-card" href="#blog">
+          <div class="blog-tag">HVAC · Cost Guide</div>
+          <h3>What Does a New HVAC System Cost in Fresno?</h3>
+          <p>Real installed price ranges for AC, furnace, heat pump, and mini-split systems this year — and exactly what drives the number up or down.</p>
+          <span class="more">Read guide →</span>
+        </a>
+        <a class="blog-card" href="#blog">
+          <div class="blog-tag">Electrical · Cost Guide</div>
+          <h3>What Does an Electrical Panel Upgrade Cost?</h3>
+          <p>100A vs 200A pricing, permit costs, and the five factors that set the final price for Fresno homes.</p>
+          <span class="more">Read guide →</span>
+        </a>
+        <a class="blog-card" href="#blog">
+          <div class="blog-tag">HVAC · Troubleshooting</div>
+          <h3>5 Signs Your AC Won’t Survive a Fresno Summer</h3>
+          <p>Warm air, weak airflow, short cycles, strange noises, and an aging system — the warning signs that your AC is about to fail in the heat.</p>
+          <span class="more">Read guide →</span>
+        </a>
+      </div>
+      <div class="blog-all"><a href="#blog">Browse all Apex articles →</a></div>
+    </div>
+  </section>
+
+  <!-- Financing short blurb (nav target) -->
+  <section class="section alt" id="financing">
+    <div class="wrap">
+      <div class="fin-blurb">
+        <div>
+          <div class="section-eyebrow light" style="margin-bottom:10px;">Financing</div>
+          <h3>Straightforward pricing &amp; financing options</h3>
+          <p>We offer financing on qualifying HVAC and electrical projects. Call for a free estimate — no pressure, clear numbers up front.</p>
+        </div>
+        <a class="btn-primary" href="tel:5596680083">Call (559) 668-0083</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section class="section white">
+    <div class="wrap">
+      <div class="section-eyebrow">Common Questions</div>
+      <h2>Answers before you call</h2>
+      <p class="section-lead">Straight answers to the questions Central Valley homeowners ask us most.</p>
+      <div class="faq-list">
+        <details class="faq">
+          <summary>What areas does Apex serve?</summary>
+          <div class="faq-body">We serve Fresno, Clovis, Madera, Visalia and the wider Central Valley — including Sanger, Kingsburg, Fowler and Kerman. Call <a href="tel:5596680083">(559) 668-0083</a> to confirm availability for your address.</div>
+        </details>
+        <details class="faq">
+          <summary>Do you offer 24/7 emergency electrical and HVAC repair?</summary>
+          <div class="faq-body">Yes. Our phone line is answered 24/7 and a licensed technician is on call for power outages, sparking panels, AC failures in extreme heat, and furnace breakdowns. Call <a href="tel:5596680083">(559) 668-0083</a> anytime. See also <a href="#services-emergency">Emergency Repairs</a>.</div>
+        </details>
+        <details class="faq">
+          <summary>Are you licensed and insured for electrical and HVAC work in California?</summary>
+          <div class="faq-body">Yes. Apex holds CSLB license #1072290 with full insurance, and carries a 5.0-star Google rating across 246+ reviews.</div>
+        </details>
+        <details class="faq">
+          <summary>Do you install EV chargers?</summary>
+          <div class="faq-body">Yes. Level 2 EV charger installs are sized to your panel and vehicle, including any panel upgrade your home needs first. See our <a href="#services-electrical">electrical services</a> for details.</div>
+        </details>
+        <details class="faq">
+          <summary>How fast can I get service in Fresno?</summary>
+          <div class="faq-body">Most customers are seen same-day or next-day. <a href="booking.html">Book online</a> in under a minute or call <a href="tel:5596680083">(559) 668-0083</a> to check today’s availability.</div>
+        </details>
+        <details class="faq">
+          <summary>What financial options do you offer?</summary>
+          <div class="faq-body">We offer straightforward pricing and financing options on qualifying HVAC and electrical projects. Call <a href="tel:5596680083">(559) 668-0083</a> for a free estimate. More under <a href="#financing">Financing</a>.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Book Online CTA -->
+  <section class="section book-band" id="book">
+    <div class="wrap">
+      <div class="section-eyebrow light">Book Online</div>
+      <h2>Pick a time that works for you</h2>
+      <p class="section-lead">Our live scheduler shows real openings on our calendar — choose a service, pick a slot, and you’re booked instantly. No waiting on a callback.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <p>Select the service you need from the scheduler.</p>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <p>Choose an available date and time that fits your schedule.</p>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <p>Get instant confirmation — a licensed Apex technician shows up ready to get it done.</p>
+        </div>
+      </div>
+      <a class="btn-primary" href="booking.html">Book Now — see live openings</a>
+    </div>
+  </section>
+
+  <!-- 10. Footer -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand" style="margin-bottom:14px;">
+            <img src="assets/logo.png" alt="Apex" style="height:36px;background:#fff;border-radius:3px;padding:2px 4px;" />
+            <div class="brand-text">APEX GENERAL<span>AIR · HEATING · ELECTRIC</span></div>
+          </div>
+          <p>Licensed HVAC and electrical services across Fresno and the Central Valley. CA Lic #1072290.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#services-hvac">Services</a></li>
+            <li><a href="#services-electrical">Electrical</a></li>
+            <li><a href="#services-hvac">HVAC</a></li>
+            <li><a href="#services-generators">Generators</a></li>
+            <li><a href="#services-electrical">Control Panels &amp; Upgrades</a></li>
+            <li><a href="#services-emergency">Emergency</a></li>
+            <li><a href="#financing">Financing</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Service Area</h5>
+          <ul>
+            <li>Fresno &amp; Clovis</li>
+            <li>Madera &amp; Madera Ranchos</li>
+            <li>Sanger &amp; Kingsburg</li>
+            <li>Fowler, Kerman &amp; Visalia</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="tel:5596680083">(559) 668-0083</a></li>
+            <li>5796 S Elm Ave</li>
+            <li>Fresno, CA 93706</li>
+            <li>Open 7 days a week</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Apex Air, Heating &amp; Electric. All rights reserved. CA License #1072290</span>
+        <span><a href="#">Privacy Policy</a> · <a href="#">Terms &amp; Conditions</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <p class="footer-note">
+    Apex General · Fresno ·
+    <a href="booking.html">booking</a> ·
+    <a href="index.html">CRM</a>
+  </p>
+
+  <script>
+    document.getElementById("menu-btn").addEventListener("click", () => {
+      document.getElementById("nav").classList.toggle("open");
+    });
+  </script>
+
+  <div id="booking-modal" role="dialog" aria-modal="true" aria-label="Book Online Now" hidden>
+    <div class="bm-scrim" data-bm-close></div>
+    <div class="bm-panel">
+      <!-- single close X lives inside booking.html topbar -->
+      <iframe id="booking-iframe" title="Book Online Now" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var modal = document.getElementById("booking-modal");
+      var iframe = document.getElementById("booking-iframe");
+      var EMBED_SRC = "booking.html?embed=1&v=5";
+
+      function openBooking(e) {
+        if (e) e.preventDefault();
+        iframe.src = EMBED_SRC;
+        modal.hidden = false;
+        modal.classList.add("open");
+        document.body.classList.add("booking-modal-open");
+        var closeBtn = modal.querySelector(".bm-close");
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function closeBooking() {
+        modal.classList.remove("open");
+        modal.hidden = true;
+        document.body.classList.remove("booking-modal-open");
+        iframe.src = "about:blank";
+      }
+
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest('a[href="booking.html"]');
+        if (a) openBooking(e);
+      });
+
+      modal.addEventListener("click", function (e) {
+        if (e.target.closest("[data-bm-close]")) closeBooking();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("open")) closeBooking();
+      });
+
+      window.addEventListener("message", function (e) {
+        if (e.data && e.data.type === "apex-booking-close") closeBooking();
+      });
+    })();
+  </script>
+
+</body>
+</html>

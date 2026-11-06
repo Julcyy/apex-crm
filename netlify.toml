@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+  command = "echo 'static demo — no build'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+
+[[redirects]]
+  from = "/"
+  to = "/homepage-top.html"
+  status = 200
